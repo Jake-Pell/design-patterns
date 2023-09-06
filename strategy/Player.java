@@ -1,36 +1,62 @@
 package strategy;
 
-public class Player {
+public abstract class Player {
     private String firstName;
     private String lastName;
     private boolean offense;
     protected DefenseBehavior DefenseBehavior;
     protected OffenseBehavior OffenseBehavior;
 
+    /**
+     * Creates a new player with a first and last name, and indicates
+     * whether or not they are on offense
+     * @param firstName
+     * @param lastName
+     * @param offense
+     */
     public Player(String firstName, String lastName, boolean offense) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.offense = offense;
+        setDefenseBehavior();
+        setOffenseBehavior();
     }
 
-    public void setDefenseBehavior() {
-        // idk
-    }
+    /**
+     * Determines the behavior that a player will have when they are on defense
+     */
+    public abstract void setDefenseBehavior();
 
-    public void setOffenseBehavior() {
-        // see last method
-    }
+    /**
+     * Determines the behavior that a player will have when they are on offense
+     */
+    public abstract void setOffenseBehavior();
 
+    /**
+     * Simulates running a play for a specific player
+     * @return A string that represents the outcome of the play
+     */
     public String play() {
-        // play something
+        if (offense && OffenseBehavior != null)
+            return OffenseBehavior.play();
+        if (DefenseBehavior != null)
+            return DefenseBehavior.play();
+        return "is not playing";
     }
 
+    /**
+     * Swaps between offense and defense
+     */
     public void turnover() {
-        // turn something over
+        offense = !offense;
     }
 
+    /**
+     * Creates a string representation of a football player
+     * @return A string of the player's first and last name
+     */
     public String toString() {
-        
+        return firstName + " " + lastName;
     }
 
 }
